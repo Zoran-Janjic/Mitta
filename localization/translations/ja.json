@@ -1,0 +1,24 @@
+{
+  "language": "日本語",
+  "screens": {
+    "intro": {
+      "title": "イントロ画面",
+      "text": {
+        "introText": "これは日本語のイントロテキストです",
+        "login": "ログイン",
+        "signup": "新規登録"
+      }
+    },
+    "login": {
+      "title": "サインイン",
+      "text": {
+        "login": "ログイン",
+        "emailAddress": "メールアドレス",
+        "password": "パスワード",
+        "continue": "続ける",
+        "createAccount": "アカウント作成",
+        "forgotPassword": "パスワードを忘れましたか？"
+      }
+    }
+  }
+}

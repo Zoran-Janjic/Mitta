@@ -1,10 +1,8 @@
-import { Text, View } from "react-native";
 
-export default function Index() {
-  return (
-    <View className="flex-1 items-center justify-center"
-    >
-      <Text className="text-5xl text-blue-500 font-bold">Edit app/index.tsx to edit this screen.</Text>
-    </View>
-  );
+import "../localization/i18n";
+import IntroSliderScreen from "./IntroSliderScreen";
+
+export default function Index(props: any) {
+  // Pass navigation if using a navigation library, otherwise remove navigation prop
+  return <IntroSliderScreen {...props} />;
 }
