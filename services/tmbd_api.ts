@@ -7,7 +7,7 @@ export const TMBD_API_CONFIG = {
   },
 };
 
-export const fetchMovice = async ({ query }: { query: string }) => {
+export const fetchMovies = async ({ query }: { query: string }) => {
   const endpoint = "/discover/movie?sort_by=popularity.desc";
 
   const response = await fetch(endpoint, {
@@ -16,7 +16,7 @@ export const fetchMovice = async ({ query }: { query: string }) => {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to fetch movies", response.statusText);
+    throw new Error(`Failed to fetch movies: ${response.statusText}`);
   }
 
   const data = await response.json();
