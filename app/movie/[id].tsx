@@ -4,7 +4,7 @@ import { Text, View } from 'react-native'
 const MovieDetails = () => {
     return (
         <View>
-            <Text>Movie Details</Text>
+            <Text className='text-black'>Movie Details</Text>
         </View>
     )
 }
