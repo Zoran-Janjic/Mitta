@@ -8,6 +8,7 @@ export const TMBD_API_CONFIG = {
 };
 
 export const fetchMovies = async ({ query }: { query: string }) => {
+  
   const endpoint = query
     ? `${TMBD_API_CONFIG.BASE_URL}/search/movie?query=${encodeURIComponent(
         query

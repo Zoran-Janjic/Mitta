@@ -36,7 +36,7 @@ const Search = () => {
             } else {
                 moviesReset();
             }
-        }, 300);
+        }, 500);
 
         return () => clearTimeout(delay);
     }, [searchQuery]);
@@ -90,6 +90,9 @@ const Search = () => {
 
                     </>
                 }
+                ListEmptyComponent={!moviesLoading && !moviesError ? (<View>
+                    <Text className='text-center text-gray-500'>{searchQuery.trim() ? `No results found for "${searchQuery}"` : "Please enter a search term."}</Text>
+                </View>) : null}
             />
 
         </View>
