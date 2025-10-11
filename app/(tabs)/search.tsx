@@ -2,6 +2,7 @@ import MovieCard from '@/components/MovieCard';
 import SearchBar from '@/components/SearchBar';
 import { icons } from '@/constants/icons';
 import { images } from '@/constants/images';
+import { updateMovieSearchCount } from '@/services/appwrite_api';
 import useFetch from "@/services/hooks/useFetch";
 import { fetchMovies } from "@/services/tmbd_api";
 import { useRouter } from "expo-router";
@@ -30,9 +31,16 @@ const Search = () => {
 
     // Debounced search effect
     useEffect(() => {
-        const delay = setTimeout(() => {
+
+        const delay = setTimeout(async () => {
             if (searchQuery.trim()) {
                 moviesRefetch();
+
+                // Fix: Check if movies exists AND has length > 0
+                if (movies && movies.length > 0 && movies[0]) {
+                    await updateMovieSearchCount(searchQuery, movies[0]);
+                }
+
             } else {
                 moviesReset();
             }
