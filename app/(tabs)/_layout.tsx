@@ -23,6 +23,8 @@ const _layout = () => {
                 height: 52,
                 position: "absolute",
                 overflow: "hidden",
+                // remove thin top line / native shadow
+                borderTopWidth: 0,
             },
         }}>
             <Tabs.Screen name="index" options={{

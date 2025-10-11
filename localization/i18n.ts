@@ -1,36 +1,78 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { translations } from "./translations";
 
 const STORE_LANGUAGE_KEY = "settings.lang";
 
+// Dynamically import AsyncStorage only when needed
+let AsyncStorage: any = null;
+
 const languageDetectorPlugin = {
   type: "languageDetector" as const,
   async: true,
   init: () => {},
   detect: async function (callback: (lang: string) => void) {
+    // More robust web detection
+    const isWeb = typeof window !== "undefined" && typeof document !== "undefined";
+    
     try {
-      // get stored language from Async storage
-      // put your own language detection logic here
-      await AsyncStorage.getItem(STORE_LANGUAGE_KEY).then((language) => {
-        if (language) {
-          //if language was stored before, use this language in the app
-          return callback(language);
-        } else {
-          //if language was not stored yet, use english
+      if (isWeb) {
+        // Web environment - use localStorage
+        try {
+          const lsLang = window.localStorage?.getItem(STORE_LANGUAGE_KEY);
+          if (lsLang) return callback(lsLang);
+
+          // Try navigator language (en-US -> en)
+          const nav = (navigator?.language || "en").split("-")[0];
+          return callback(nav || "en");
+        } catch {
+          console.warn("i18n: web language detection failed");
           return callback("en");
         }
-      });
+      } else {
+        // Native environment - dynamically import AsyncStorage
+        try {
+          if (!AsyncStorage) {
+            AsyncStorage = (await import("@react-native-async-storage/async-storage")).default;
+          }
+          const language = await AsyncStorage.getItem(STORE_LANGUAGE_KEY);
+          if (language) return callback(language);
+          return callback("en");
+        } catch (nativeError) {
+          console.warn("i18n: native storage failed, falling back to en", nativeError);
+          return callback("en");
+        }
+      }
     } catch (error) {
       console.log("Error reading language", error);
+      return callback("en");
     }
   },
   cacheUserLanguage: async function (language: string) {
+    const isWeb = typeof window !== "undefined" && typeof document !== "undefined";
+    
     try {
-      //save a user's language choice in Async storage
-      await AsyncStorage.setItem(STORE_LANGUAGE_KEY, language);
-    } catch (error) {}
+      if (isWeb) {
+        // Web environment - use localStorage
+        try {
+          window.localStorage?.setItem(STORE_LANGUAGE_KEY, language);
+        } catch {
+          // ignore localStorage errors
+        }
+      } else {
+        // Native environment - dynamically import AsyncStorage
+        try {
+          if (!AsyncStorage) {
+            AsyncStorage = (await import("@react-native-async-storage/async-storage")).default;
+          }
+          await AsyncStorage.setItem(STORE_LANGUAGE_KEY, language);
+        } catch {
+          // ignore AsyncStorage errors
+        }
+      }
+    } catch {
+      // ignore cache errors
+    }
   },
 };
 
