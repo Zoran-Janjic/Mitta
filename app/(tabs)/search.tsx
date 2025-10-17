@@ -34,20 +34,21 @@ const Search = () => {
 
         const delay = setTimeout(async () => {
             if (searchQuery.trim()) {
-                moviesRefetch();
-
-                // Fix: Check if movies exists AND has length > 0
-                if (movies && movies.length > 0 && movies[0]) {
-                    await updateMovieSearchCount(searchQuery, movies[0]);
-                }
-
+                await moviesRefetch();
             } else {
                 moviesReset();
             }
-        }, 500);
+        }, 1000);
 
         return () => clearTimeout(delay);
     }, [searchQuery]);
+
+    useEffect(() => {
+        // Fix: Check if movies exists AND has length > 0
+        if (movies?.length > 0 && movies?.[0]) {
+            updateMovieSearchCount(searchQuery, movies[0]);
+        }
+    }, [movies])
 
     return (
         <View className='bg-primary flex-1'>
