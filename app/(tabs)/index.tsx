@@ -50,55 +50,55 @@ export default function Index(props: any) {
           <ActivityIndicator size="large" color="#0000ff" className="mt-10 self-center" />)
           : moviesError || trendingError ? (<Text className="text-red-500">Error: {moviesError?.message || trendingError?.message}</Text>)
             : (
-            <FlatList
-              data={movies}
-              className="mt-2 pb-32 flex-1"
-              ListHeaderComponent={
-                <>
-                  <SearchBar onPress={() => { router.push("/search") }} placeholder="Search for a movie" />
+              <FlatList
+                data={movies}
+                className="mt-2 pb-32 flex-1"
+                ListHeaderComponent={
+                  <>
+                    <SearchBar onPress={() => { router.push("/search") }} placeholder="Search for a movie" />
 
-                  {trendingMovies && (
-                    <View className="mt-10">
-                      <Text className="text-lg text-white font-bold mb-3">Trending Movies</Text>
-                    </View>
-                  )}
-
-                  <FlatList
-                    horizontal
-                    data={trendingMovies}
-                    ItemSeparatorComponent={() => <View className="w-4" />}
-                    className="mb-4 mt-3"
-                    style={{ height: 280 }}
-                    renderItem={({ item, index }) => (
-                      <TrendingMovieCard movie={item} index={index} />
+                    {trendingMovies && (
+                      <View className="mt-10">
+                        <Text className="text-lg text-white font-bold mb-3">Trending Movies</Text>
+                      </View>
                     )}
-                    keyExtractor={(item, index) =>
-                      String((item as any)?.movie_id ?? (item as any)?.id ?? index)
-                    }
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={{ paddingBottom: 32, paddingTop: 8 }}
-                    scrollEnabled={true}
-                  />
 
-                  <Text className="text-lg text-white font-bold mb-3 mt-5">
-                    Latest Movies
-                  </Text>
-                </>
-              }
-              renderItem={({ item }) => (
-                <MovieCard {...item} />
-              )}
-              numColumns={3}
-              keyExtractor={(item) => item.id.toString()}
-              columnWrapperStyle={{
-                justifyContent: "flex-start",
-                gap: 20,
-                paddingRight: 5,
-                marginBottom: 10,
-              }}
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ paddingBottom: 32, paddingTop: 8 }}
-            />
+                    <FlatList
+                      horizontal
+                      data={trendingMovies}
+                      ItemSeparatorComponent={() => <View className="w-4" />}
+                      className="mb-4 mt-3"
+                      style={{ height: 280 }}
+                      renderItem={({ item, index }) => (
+                        <TrendingMovieCard movie={{ ...item }} index={index} />
+                      )}
+                      keyExtractor={(item, index) =>
+                        String((item as any)?.movie_id ?? (item as any)?.id ?? index)
+                      }
+                      showsHorizontalScrollIndicator={false}
+                      contentContainerStyle={{ paddingBottom: 32, paddingTop: 8 }}
+                      scrollEnabled={true}
+                    />
+
+                    <Text className="text-lg text-white font-bold mb-3 mt-5">
+                      Latest Movies
+                    </Text>
+                  </>
+                }
+                renderItem={({ item }) => (
+                  <MovieCard {...item} />
+                )}
+                numColumns={3}
+                keyExtractor={(item) => item.id.toString()}
+                columnWrapperStyle={{
+                  justifyContent: "flex-start",
+                  gap: 20,
+                  paddingRight: 5,
+                  marginBottom: 10,
+                }}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ paddingBottom: 32, paddingTop: 8 }}
+              />
             )}
 
       </View>
