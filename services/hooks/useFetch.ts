@@ -9,13 +9,12 @@ import { useEffect, useState } from "react";
 // as soon as the component mounts.
 
 const useFetch = <T>(fetchFunction: () => Promise<T>, autoFetch = true) => {
-
   // where we store the successful result (or null before any result)
   const [data, setData] = useState<T | null>(null);
 
   // true while the request is in progress
   const [loading, setLoading] = useState<boolean>(false);
-  
+
   // any error thrown by the fetchFunction
   const [error, setError] = useState<Error | null>(null);
 
@@ -27,6 +26,7 @@ const useFetch = <T>(fetchFunction: () => Promise<T>, autoFetch = true) => {
       setError(null);
       // call the user-supplied async function
       const result = await fetchFunction();
+
       // store the result so consumers can use it
       setData(result);
     } catch (err) {

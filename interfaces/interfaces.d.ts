@@ -15,12 +15,9 @@ interface Movie {
   vote_count: number;
 }
 
-interface TrendingMovie {
+interface TrendingMovie extends Movie {
   searchTerm: string;
-  movie_id: number;
-  title: string;
   count: number;
-  posterUrl: string;
 }
 
 interface MovieDetails {

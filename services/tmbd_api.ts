@@ -8,7 +8,6 @@ export const TMBD_API_CONFIG = {
 };
 
 export const fetchMovies = async ({ query }: { query: string }) => {
-  
   const endpoint = query
     ? `${TMBD_API_CONFIG.BASE_URL}/search/movie?query=${encodeURIComponent(
         query
@@ -27,4 +26,33 @@ export const fetchMovies = async ({ query }: { query: string }) => {
   const data = await response.json();
 
   return data.results;
+};
+
+export const fetchMovieDetails = async ({
+  movieId,
+}: {
+  movieId: string;
+}): Promise<MovieDetails> => {
+  try {
+    console.log("id is ", movieId);
+
+    const response = await fetch(
+      `${TMBD_API_CONFIG.BASE_URL}/movie/${movieId}?api_key=${TMBD_API_CONFIG.API_KEY}`,
+      {
+        method: "GET",
+        headers: TMBD_API_CONFIG.headers,
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch movie details: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.log("Error in fetchMovieDetails", error);
+    throw error;
+  }
 };

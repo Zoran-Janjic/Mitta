@@ -4,9 +4,10 @@ import { Link } from "expo-router";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
+
 interface TrendingCardProps {
     movie: {
-        movie_id: number;
+        movieId: number;
         title: string;
         posterUrl: string;
     };
@@ -14,11 +15,14 @@ interface TrendingCardProps {
 }
 
 const TrendingCard = ({
-    movie: { movie_id, title, posterUrl },
+    movie: { movieId, title, posterUrl },
     index,
 }: TrendingCardProps) => {
+
+    console.log("first TrendingCard is ", movieId, title, posterUrl, index);
+
     return (
-        <Link href={`/movie/${movie_id}`} asChild>
+        <Link href={`/movie/${movieId}`} asChild>
             <TouchableOpacity className="w-32">
                 {/* Poster image container with index overlay */}
                 <View className="relative">
