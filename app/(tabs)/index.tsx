@@ -70,7 +70,7 @@ export default function Index(props: any) {
                       className="mb-4 mt-3"
                       style={{ height: 280 }}
                       renderItem={({ item, index }) => (
-                        <TrendingMovieCard movie={{ ...item }} index={index} />
+                        <TrendingMovieCard movie={item} index={index} />
                       )}
                       keyExtractor={(item, index) =>
                         String((item as any)?.movie_id ?? (item as any)?.id ?? index)

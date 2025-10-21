@@ -4,35 +4,25 @@ import { Link } from "expo-router";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
+
 interface TrendingCardProps {
     movie: {
-        id: number;
+        movieId: number;
         title: string;
-        adult: boolean;
-        backdrop_path: string;
-        genre_ids: number[];
-        original_language: string;
-        original_title: string;
-        overview: string;
-        popularity: number;
         posterUrl: string;
-        release_date: string;
-        video: boolean;
-        vote_average: number;
-        vote_count: number;
     };
     index: number;
 }
 
 const TrendingCard = ({
-    movie: { id, title, posterUrl },
+    movie: { movieId, title, posterUrl },
     index,
 }: TrendingCardProps) => {
 
-    console.log("first TrendingCard is ", id, title, posterUrl, index);
+    console.log("first TrendingCard is ", movieId, title, posterUrl, index);
 
     return (
-        <Link href={`/movie/${id}`} asChild>
+        <Link href={`/movie/${movieId}`} asChild>
             <TouchableOpacity className="w-32">
                 {/* Poster image container with index overlay */}
                 <View className="relative">

@@ -18,7 +18,6 @@ interface Movie {
 interface TrendingMovie extends Movie {
   searchTerm: string;
   count: number;
-  posterUrl: string;
 }
 
 interface MovieDetails {

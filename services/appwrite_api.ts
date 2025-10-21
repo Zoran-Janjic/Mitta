@@ -68,9 +68,9 @@ export const getTrendingMovies = async (): Promise<
       APPWRITE_API_CONFIG.COLLECTION_ID,
       [Query.limit(10), Query.orderDesc("count")]
     );
+    
     return result.documents as unknown as TrendingMovie[];
   } catch (error) {
-    console.log("error in getTrendingMovies:", error);
     return undefined;
   }
 };
